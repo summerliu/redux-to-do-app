@@ -1,23 +1,38 @@
 const initialState = {
-    id: '',
-    content: {},
+    allIds: [],
+    byIds: {},
 };
 
 const todoReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'ADD_TODO':
-            const { id, conetent } = action.payload;
+            const { id, content } = action.payload;
             return {
                 ...state,
-                conetent,
+                allIds: [...state.allIds.id],
+                byIds: {
+                    ...state.allIds,
+                    [id]: {
+                        content,
+                        completed: false
+                    },
+                },
             };
             case 'TOGGLE_TODO':
             return {
                 ...state,
-                id,
+                byIds: {
+                    ...state.byIds,
+                    [id]: {
+                      ...state.byIds[id],
+                      completed: !state.byIds[id].completed
+                    }
+                },
             };
         default:
-            return state;
+            return {
+                state,
+            };
     };
 };
 
